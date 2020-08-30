@@ -1,13 +1,11 @@
-let { users } = require('../models');
-
 const resolvers = {
   Query: {
-    users: () => users,
-    user: (parent, { id }) => users.filter(user => user.id === id)[0],
-    me: () => me
+    users: (parent, args, { models: { users } }) => users,
+    user: (parent, { id }, { models: { users } }) => users.filter(user => user.id === id)[0],
+    me: (parent, args, { me }) => me
   },
   Mutation: {
-    createUser: (parent, { id, name }) => {
+    createUser: (parent, { id, name }, { models: { users } }) => {
       const user = {
         id,
         name
@@ -15,7 +13,7 @@ const resolvers = {
       users.push(user);
       return user;
     },
-    deleteUser: (parent, { id }) => {
+    deleteUser: (parent, { id }, { models: { users } }) => {
       let found = false;
       users = users.filter(user => {
         if (user.id === id) {
@@ -28,7 +26,7 @@ const resolvers = {
     },
   },
   User: {
-    cars: parent => cars.filter(car => car.ownedBy === parent.id)
+    cars: (parent, args, { models: { cars } }) => cars.filter(car => car.ownedBy === parent.id)
   }
 };
 
