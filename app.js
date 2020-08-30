@@ -18,7 +18,7 @@ const typeDefs = gql`
     make: String!
     model: String!
     color: String!
-    owner: User!
+    owner: User
   }
 
   type Query {
@@ -32,6 +32,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(id: Int!, name: String!): User!
     deleteUser(id: Int!): Boolean!
+    createCar(id: Int!, make: String!, model: String!, color: String!): Car!
+    deleteCar(id: Int!): Boolean!
   }
 `;
 
@@ -59,7 +61,23 @@ const resolvers = {
         if (user.id === id) {
           found = true;
         } else {
-          return users;
+          return user;
+        }
+      });
+      return found;
+    },
+    createCar: (parent, params) => {
+      const car = { ...params };
+      cars.push(car);
+      return car;
+    },
+    deleteCar: (parent, { id }) => {
+      let found = false;
+      cars = cars.filter(car => {
+        if (car.id === id) {
+          found = true;
+        } else {
+          return car;
         }
       });
       return found;
