@@ -6,7 +6,7 @@ const models = require('./models');
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
-const me = models.users[0];
+//const me = models.users[0];
 //GraphQL is agnostic about the storage data
 //Schema definition for GraphQL Queries and Mutations
 const server = new ApolloServer({
@@ -14,7 +14,7 @@ const server = new ApolloServer({
   resolvers,
   context: {
     models,
-    me,
+    //me,
   }
 });
 

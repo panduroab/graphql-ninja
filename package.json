@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node ."
+    "start": "nodemon ."
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,11 @@
     "apollo-server": "^2.16.1",
     "apollo-server-express": "^2.16.1",
     "express": "^4.17.1",
-    "graphql": "^15.3.0"
+    "graphql": "^15.3.0",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
