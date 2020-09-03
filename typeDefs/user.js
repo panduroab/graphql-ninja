@@ -14,7 +14,7 @@ const typeDefs = gql`
   }
 
   extend type Mutation {
-    createUser(id: Int!, name: String!): User!
+    createUser(name: String!): User!
     deleteUser(id: Int!): Boolean!
   }
 `;
