@@ -17,7 +17,7 @@ const resolvers = {
     }
   },
   Car: {
-    owner: (parent, args, { models: { User } }) => User.findByPk(parent.ownedBy)
+    owner: (parent, args, { models: { User } }) => User.findByPk(parent.userId)
     //owner: (parent, args, { models: { users } }) => users.filter(user => user.id === parent.ownedBy)[0]
   }
 };
