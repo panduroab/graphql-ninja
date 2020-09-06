@@ -4,6 +4,8 @@ const models = require('./models');
 const createData = async () => {
   await models.User.create({
     name: 'Victor',
+    username: 'victor',
+    password: 'strongpwd',
     cars: [
       {
         make: 'Suzuki',
@@ -18,6 +20,8 @@ const createData = async () => {
   })
   await models.User.create({
     name: 'Manuel',
+    username: 'manuel',
+    password: 'strongpwd',
     cars: [
       {
         make: 'Honda',
@@ -32,6 +36,8 @@ const createData = async () => {
   })
   await models.User.create({
     name: 'Ana',
+    username: 'ana',
+    password: 'strongpwd',
     cars: [
       {
         make: 'VW',
@@ -46,7 +52,7 @@ const createData = async () => {
   })
 }
 
-sequelize.sync().then(async () => {
+sequelize.sync({force: true}).then(async () => {
   try {
     await createData();
   } catch (err) {
