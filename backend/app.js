@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 
 const models = require('./models');
@@ -19,5 +20,6 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app });
+app.use(cors());
 
 app.listen(3000, () => console.info('Apollo GraphQL server is running on port localhost:3000/graphql'));
