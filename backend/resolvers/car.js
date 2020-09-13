@@ -4,8 +4,11 @@ const resolvers = {
     car: (parent, { id }, { models: { Car } }) => Car.findByPk(id),
   },
   Mutation: {
-    createCar: (parent, params, { models: { Car } }) => {
-      const car = { ...params };
+    createCar: (parent, params, { models: { Car }, me }) => {
+      if (!me) {
+        throw new Error("Not Authenticated")
+      }
+      const car = { ...params, userId: me.id };
       return Car.create(car);
     },
     deleteCar: (parent, { id }, { models: { Car } }) => {
