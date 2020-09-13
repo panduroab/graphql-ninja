@@ -17,6 +17,9 @@ const user = (sequelize, DataTypes) => {
       variable: {
         notEmpty: true
       }
+    },
+    photo: {
+      type: DataTypes.STRING
     }
   });
 

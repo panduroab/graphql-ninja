@@ -1,5 +1,13 @@
 const models = require("../models");
 const jwt = require('jsonwebtoken');
+const cloudinary = require('cloudinary');
+const path = require('path');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 const createToken = (user, secret, expiresIn) => {
   const { id, name, username } = user;
@@ -58,6 +66,25 @@ const resolvers = {
       } catch (error) {
         console.error(error);
         return error;
+      }
+    },
+    uploadImage: async (parent, { filename }, { models: { User }, me }) => {
+      if (!me) {
+        throw new Error('Not authenticated')
+      }
+      const mainDir = path.dirname(require.main.filename);
+      filename = `${mainDir}/uploads/${filename}`;
+      try {
+        const photo = await cloudinary.v2.uploader.upload(filename);
+        const photoURI = `${photo.public_id}.${photo.format}`;
+        await User.update({
+          photo: photoURI
+        }, {
+          where: { username: me.username }
+        });
+        return photoURI;
+      } catch (error) {
+        return error
       }
     }
   },

@@ -5,11 +5,14 @@ const typeDefs = gql`
     id: ID!
     name: String! 
     cars: [Car]
+    photo: String
   }
 
   type Token {
     token: String!
   }
+
+  scalar CloudinaryOptions
 
   extend type Query {
     me: User
@@ -22,6 +25,7 @@ const typeDefs = gql`
     deleteUser(id: Int!): Boolean!
     register(name: String!, username: String!, password: String!): Boolean!
     login(username: String!, password: String!): Token!
+    uploadImage(filename: String!): String!
   }
 `;
 
