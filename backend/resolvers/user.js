@@ -1,6 +1,6 @@
-const models = require("../models");
 const jwt = require('jsonwebtoken');
 const cloudinary = require('cloudinary');
+const { GraphQLScalarType } = require('graphql');
 const path = require('path');
 
 cloudinary.config({
@@ -93,8 +93,37 @@ const resolvers = {
       where: {
         userId: parent.id
       }
-    })
-  }
+    }),
+    photo: (parent, { options }) => {
+      let url = cloudinary.url(parent.photo);
+      if (options) {
+        // width: Int, q_auto: Boolean, f_auto: Boolean, face: 'face'
+        const [width, q_auto, f_auto, face] = options;
+        const cloudinaryOptions = {
+          ...(q_auto === 'true' && { quality: 'auto' }),
+          ...(f_auto === 'true' && { fetch_format: 'auto' }),
+          ...(face && { crop: 'thumb', gravity: 'face' }),
+          width,
+          secure: true
+        };
+        url = cloudinary.url(parent.photo, cloudinaryOptions);
+        return url;
+      }
+      return url;
+    }
+  },
+  CloudinaryOptions: new GraphQLScalarType({
+    name: 'CloudinaryOptions',
+    parseValue(value) {//Value that you get from the client 
+      return value;
+    },
+    serialize(value) {//Value that you sent to the client
+      return value;
+    },
+    parseLiteral(ast) {//Sent info to resolver
+      return ast.value.split(',');
+    }
+  })
 };
 
 module.exports = resolvers;

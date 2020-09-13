@@ -5,7 +5,7 @@ const typeDefs = gql`
     id: ID!
     name: String! 
     cars: [Car]
-    photo: String
+    photo(options: CloudinaryOptions): String
   }
 
   type Token {
