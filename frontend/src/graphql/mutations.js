@@ -1,13 +1,13 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 const mutations = gql`
   mutation createUser($name: String!) {
     createUser(name: $name) {
-      id,
-      name,
-      cars, {
-        model,
-        make,
+      id
+      name
+      cars {
+        model
+        make
         color
       }
     }

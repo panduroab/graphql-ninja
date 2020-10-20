@@ -1,14 +1,14 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 const query = gql`
   query {
     users {
-      id,
-      name,
+      id
+      name
       cars {
-        id,
-        make,
-        model,
+        id
+        make
+        model
         color
       }
     }
